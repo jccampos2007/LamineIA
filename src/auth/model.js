@@ -1,6 +1,7 @@
 const { SQL, generateRandomStringNumber } = require("../../libs/tools");
 const { SendEmailPassword } = require("../../libs/services");
 const Token = require('../../libs/token');
+const moment = require('moment');
 
 async function login(data) {
     try {
@@ -10,9 +11,16 @@ async function login(data) {
 
         let sql = `SELECT * FROM user WHERE email = '${email}';`;
         let outsql = await SQL(sql);
+        console.log(outsql.length, outsql);
 
         if (outsql.length == 0) {
-            out = { code: 210, method: 'Login', message: 'Email Incorrect...!' };
+            const createdAt = moment().format('YYYY-MM-DD HH:mm:ss');
+            otp = generateRandomStringNumber(6);
+            let sql = `INSERT INTO user (email, otp, createdAt) VALUES ('${email}', '${otp}' , '${createdAt}');`;
+            let outsql = await SQL(sql);
+            let id = outsql.insertId;
+            await SendEmailPassword(id);
+            out = { code: 210, method: 'Login', message: 'Email not Validated. Enter OTP Code...!', data: "Check the OTP code in your email" };
         } else if (outsql[0].validate_email == 1) {
             token = Token.createToken(outsql[0]);
             out = { code: 200, method: 'Login', message: 'OK', data: outsql, token };
