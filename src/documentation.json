@@ -1,0 +1,89 @@
+{
+  "documentation:": {
+    "auth":{               
+      "POST /ws/auth/login":{
+          "method":"post",
+          "PostParameters":"email, otp",
+          "required":"email",
+          "response":{
+              "200":"Ok...!",
+              "210":"Email Incorrect",
+              "400":"Validation Errors / Sql Errors",
+              "404":"Not found"
+          }
+      }
+    },
+    "banner":{            
+      "GET /ws/banner":{
+          "method":"get",
+          "headersParameters":"token",
+          "GetParameters":"",
+          "required":"token",
+          "response":{
+              "200":"Ok...!",
+              "210":"getOne - empty...!",
+              "400":"Validation Errors",
+              "404":"Not found"
+          }
+      },
+      "GET /ws/banner/paginator":{
+          "method":"get",
+          "headersParameters":"token",
+          "GetParameters":"start, length, search, order, sort",
+          "required":"token, start, length, order",
+          "response":{
+              "200":"Ok...!",
+              "210":"getOne - empty...!",
+              "400":"Validation Errors",
+              "404":"Not found"
+          }
+      },          
+      "POST /ws/banner":{
+          "method":"post",
+          "headersParameters":"token",
+          "PostParameters":"idCompany, idVideo, typeBanner, title, description, pathImage, urlImage",
+          "required":"token, idCompany, typeBanner, title, description",
+          "response":{
+              "201":"Add banner...!",
+              "210":"This company already has a banner",
+              "400":"Validation Errors / Sql Errors",
+              "404":"Not found"
+          }
+      },
+      "PUT /ws/banner":{
+          "method":"put",
+          "headersParameters":"token",
+          "PostParameters":"id, idCompany, typeBanner, title, description, idVideo",
+          "required":"token, id, idCompany, typeBanner, title, description",
+          "response":{
+              "200":" ok / Update banner...!",
+              "400":"Validation Errors / Sql Errors",
+              "404":"Not found"
+          }
+      },
+      "PUT /ws/banner/image":{
+          "method":"put",
+          "headersParameters":"token",
+          "PostParameters":"id, pathImage, urlImage",
+          "required":"token, id, pathImage, urlImage",
+          "response":{
+              "200":"ok / image banner...!",
+              "400":"Validation Errors / Sql Errors",
+              "404":"Not found"
+          }
+      },
+      "DELETE /ws/banner":{
+          "method":"get",
+          "authentication":"token",
+          "headersParameters":"id",
+          "required":"id",
+          "response":{
+              "200":" ok / delete banner...!",
+              "400":"Validation Errors / Sql Errors",
+              "404":"Not found"
+          }
+          
+      }
+    }
+  }
+}
