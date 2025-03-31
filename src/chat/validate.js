@@ -8,6 +8,8 @@ const validemail = "It must be a valid email";
 const bannerValidate = {
     chat: [ 
             check('message')
+                .notEmpty().withMessage(notempty),
+            check('intelligence')
                 .notEmpty().withMessage(notempty)
         ]
 }

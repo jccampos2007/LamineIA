@@ -24,6 +24,7 @@ module.exports = {
     URL_SEND: process.env.URL_SEND,
     URL_SEND_UPDATE_DEPENDENT: process.env.URL_SEND_UPDATE_DEPENDENT,
     GROQ_API_KEY: process.env.GROQ_API_KEY,
+    HIGGING_API_KEY: process.env.HIGGING_API_KEY,
     CERTIFICATE_KEY: process.env.CERTIFICATE_KEY,
     CERTIFICATE_CRT: process.env.CERTIFICATE_CRT
 };  
