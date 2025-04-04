@@ -9,7 +9,7 @@ async function index(req, res) {
       message: "Validation Errors",
       errors: errors.array(),
     });
-  res.send("{code:200,message:'wschatgptdev ....!'}");
+  res.send("{code:200,message:'wslamineia ....!'}");
 }
 
 async function documentation(req, res) {
