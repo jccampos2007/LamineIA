@@ -10,7 +10,7 @@ tags:
     description: Identification   
   - name: user
     description: Administration   
-  - name: test
+  - name: subscribers
     description: Administration   
 paths:
   # module login
@@ -119,13 +119,13 @@ paths:
           description: Access Denied...!    
   # modulo user 
 
-  # modulo test       
-  /ws/test:
+  # modulo subscribers       
+  /ws/subscribers:
     get:
       tags:
-        - test
-      summary: Get One user.
-      description:  One user.
+        - subscribers
+      summary: Get One subscribers.
+      description:  One subscribers.
       operationId: userGetOne   
       parameters:          
         - in: query
@@ -145,15 +145,15 @@ paths:
           description: Access Denied...!  
     post:
       tags:
-        - test
-      summary: Create user.
-      description: New user.       
-      operationId: adduser
+        - subscribers
+      summary: Create subscribers.
+      description: New subscribers.       
+      operationId: addsubscribers
       requestBody:        
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/adduser'   
+              $ref: '#/components/schemas/addsubscribers'   
         required: true         
       responses:
         '201':
@@ -162,31 +162,13 @@ paths:
           description: validation error
         '403':
           description: Access Denied...!  
-    put:
-      tags:
-        - test
-      summary: Update user.
-      description: Modify user.       
-      operationId: updateuser
-      requestBody:        
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/updateuser'   
-        required: true         
-      responses:
-        '200':
-          description: Ok / Update user...!
-        '400':
-          description: validation error / Sql Errors
-        '403':
-          description: Access Denied...!  
+    
     delete:
       tags:
-        - test
-      summary: Delete user.
+        - subscribers
+      summary: Delete subscribers.
       description: delete 
-      operationId: deleteuser.
+      operationId: deletesubscribers.
       parameters:         
         - in: query
           name: id
@@ -200,7 +182,23 @@ paths:
         '400':
           description: validation error
         '403':
-          description: Access Denied...!    
+          description: Access Denied...!
+  /ws/subscribers/list:
+    get:
+      tags:
+        - subscribers
+      summary: Get One subscribers.
+      description:  One subscribers.
+      operationId: userGetAll      
+      responses:
+        '200':
+          description: Ok...!
+        '210':
+          description: getOne - empty...!
+        '400':
+          description: validation error  
+        '403':
+          description: Access Denied...!      
   # modulo test 
 #//////////////////////////////////////////////////////////////////////////////////////////          
 components:
@@ -229,7 +227,20 @@ components:
         email:
           type: string          
           example: "user@gmail.com"
- 
+  
+    addsubscribers:
+          type: object
+          properties:
+            idUser:
+              type: integer     
+              example: 1
+            period:
+              type: string 
+              example: "2026-12-31"
+            apiKey: 
+              type: string
+              example: "gr5g18g5s1gv53s1dv8sd4g"
+
     changeStatus:
       type: object
       properties:

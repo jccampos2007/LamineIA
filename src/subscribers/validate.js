@@ -13,7 +13,7 @@ const loginValidate = {
 			.isNumeric().withMessage(notnumeric)	 
     ],
     add:[
-        check('id_user')
+        check('idUser')
 			.notEmpty().withMessage(notempty)
 			.isNumeric().withMessage(notnumeric),
         check('period')
