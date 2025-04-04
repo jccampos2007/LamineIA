@@ -13,8 +13,8 @@
           }
       }
     },
-    "banner":{            
-      "GET /ws/banner":{
+    "test":{            
+      "GET /ws/test":{
           "method":"get",
           "headersParameters":"token",
           "GetParameters":"",
@@ -26,7 +26,7 @@
               "404":"Not found"
           }
       },
-      "GET /ws/banner/paginator":{
+      "GET /ws/test/paginator":{
           "method":"get",
           "headersParameters":"token",
           "GetParameters":"start, length, search, order, sort",
@@ -38,47 +38,47 @@
               "404":"Not found"
           }
       },          
-      "POST /ws/banner":{
+      "POST /ws/test":{
           "method":"post",
           "headersParameters":"token",
-          "PostParameters":"idCompany, idVideo, typeBanner, title, description, pathImage, urlImage",
-          "required":"token, idCompany, typeBanner, title, description",
+          "PostParameters":"idCompany, idVideo, typetest, title, description, pathImage, urlImage",
+          "required":"token, idCompany, typetest, title, description",
           "response":{
-              "201":"Add banner...!",
-              "210":"This company already has a banner",
+              "201":"Add test...!",
+              "210":"This company already has a test",
               "400":"Validation Errors / Sql Errors",
               "404":"Not found"
           }
       },
-      "PUT /ws/banner":{
+      "PUT /ws/test":{
           "method":"put",
           "headersParameters":"token",
-          "PostParameters":"id, idCompany, typeBanner, title, description, idVideo",
-          "required":"token, id, idCompany, typeBanner, title, description",
+          "PostParameters":"id, idCompany, typetest, title, description, idVideo",
+          "required":"token, id, idCompany, typetest, title, description",
           "response":{
-              "200":" ok / Update banner...!",
+              "200":" ok / Update test...!",
               "400":"Validation Errors / Sql Errors",
               "404":"Not found"
           }
       },
-      "PUT /ws/banner/image":{
+      "PUT /ws/test/image":{
           "method":"put",
           "headersParameters":"token",
           "PostParameters":"id, pathImage, urlImage",
           "required":"token, id, pathImage, urlImage",
           "response":{
-              "200":"ok / image banner...!",
+              "200":"ok / image test...!",
               "400":"Validation Errors / Sql Errors",
               "404":"Not found"
           }
       },
-      "DELETE /ws/banner":{
+      "DELETE /ws/test":{
           "method":"get",
           "authentication":"token",
           "headersParameters":"id",
           "required":"id",
           "response":{
-              "200":" ok / delete banner...!",
+              "200":" ok / delete test...!",
               "400":"Validation Errors / Sql Errors",
               "404":"Not found"
           }

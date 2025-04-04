@@ -1,317 +1,198 @@
-# openapi: 3.0.3
-# info:
-#   title: WS Elearning Dev - OpenAPI 3.0  
-#   version: 0.0.1
-# servers:  
-#   - url: http://localhost:3000     
-#   - url: https://wselearnigdev.gosmartcrm.com:3000
-# tags:
-#   - name: auth
-#     description: Identification   
-#   - name: banner
-#     description: Administration   
-# paths:
-#   # module login
-#   /ws/auth/login:
-#     post:
-#       tags:
-#         - auth
-#       summary: Login Member
-#       description: Session Start.
-#       operationId: loginMember
-#       requestBody:
-#         description: Init Session
-#         content:
-#           application/json:
-#             schema:
-#               $ref: '#/components/schemas/sendLoginMember'   
-#         required: true         
-#       responses:
-#         '200':
-#           description: Ok...!         
-#         '400':
-#           description: validation error
-#   /ws/auth/logindash:
-#     post:
-#       tags:
-#         - auth
-#       summary: Login User
-#       description: Session Start.
-#       operationId: loginUser
-#       requestBody:
-#         description: Init Session
-#         content:
-#           application/json:
-#             schema:
-#               $ref: '#/components/schemas/sendLoginUser'   
-#         required: true         
-#       responses:
-#         '200':
-#           description: Ok...!         
-#         '400':
-#           description: validation error
-#   /ws/auth/logout:
-#     put:
-#       tags:
-#         - auth
-#       summary: Logout Member
-#       description: Session Stop.
-#       operationId: logoutMember      
-#       response:
-#         '200':
-#           description: "Ok...!"
-#   # modulo login      
+openapi: 3.0.3
+info:
+  title: WS Elearning Dev - OpenAPI 3.0  
+  version: 0.0.1
+servers:  
+  - url: http://localhost:3000     
+  - url: https://wselearnigdev.gosmartcrm.com:3000
+tags:
+  - name: auth
+    description: Identification   
+  - name: test
+    description: Administration   
+paths:
+  # module login
+  /ws/auth/login:
+    post:
+      tags:
+        - auth
+      summary: Login
+      description: Session Start.
+      operationId: login
+      requestBody:
+        description: Init Session
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/sendLogin'   
+        required: true         
+      responses:
+        '200':
+          description: Ok...!         
+        '400':
+          description: validation error
+  # modulo login      
 
-#   # modulo user  
-         
-#   /ws/banner:
-#     get:
-#       tags:
-#         - banner
-#       summary: Get One banner.
-#       description:  One banner.
-#       operationId: bannerGetOne   
-#       parameters:          
-#         - in: query
-#           name: id
-#           schema:
-#             type: integer 
-#             example : 0
-#           required: true   
-#       responses:
-#         '200':
-#           description: Ok...!
-#         '210':
-#           description: getOne - empty...!
-#         '400':
-#           description: validation error  
-#         '403':
-#           description: Access Denied...!  
-#     post:
-#       tags:
-#         - banner
-#       summary: Create Banner.
-#       description: New Banner.       
-#       operationId: addBanner
-#       requestBody:        
-#         content:
-#           application/json:
-#             schema:
-#               $ref: '#/components/schemas/addBanner'   
-#         required: true         
-#       responses:
-#         '201':
-#           description: Created...!
-#         '400':
-#           description: validation error
-#         '403':
-#           description: Access Denied...!  
-#     put:
-#       tags:
-#         - banner
-#       summary: Update Banner.
-#       description: Modify Banner.       
-#       operationId: updateBanner
-#       requestBody:        
-#         content:
-#           application/json:
-#             schema:
-#               $ref: '#/components/schemas/updateBanner'   
-#         required: true         
-#       responses:
-#         '200':
-#           description: Ok / Update banner...!
-#         '400':
-#           description: validation error / Sql Errors
-#         '403':
-#           description: Access Denied...!  
-#     delete:
-#       tags:
-#         - banner
-#       summary: Delete Banner.
-#       description: delete 
-#       operationId: deleteBanner.
-#       parameters:         
-#         - in: query
-#           name: id
-#           schema:
-#             type: integer 
-#             example : 0
-#           required: true             
-#       responses:
-#         '200':
-#           description: Ok...!
-#         '400':
-#           description: validation error
-#         '403':
-#           description: Access Denied...!    
-
-#   /ws/banner/paginator:
-#     get:
-#       tags:
-#         - banner
-#       summary: Paginated Of Banner.
-#       description: Paginated Banner.
-#       operationId: paginatorBanner
-#       parameters:         
-#         - in: query
-#           name: start
-#           schema:
-#             type: integer 
-#             example : 0
-#           required: true
-#         - in: query
-#           name: length
-#           schema:
-#             type: integer
-#             example : 10
-#           required: true
-#         - in: query
-#           name: order
-#           schema:
-#             type: string
-#             example: asc
-#           required: true 
-#         - in: query
-#           name: search
-#           schema:
-#             type: string
-#         - in: query
-#           name: sort
-#           schema:
-#             type: string
-#       responses:
-#         '200':
-#           description: Ok...!
-#         '400':
-#           description: validation error
-#         '403':
-#           description: Access Denied...!  
+  # modulo test       
+  /ws/test:
+    get:
+      tags:
+        - test
+      summary: Get One test.
+      description:  One test.
+      operationId: testGetOne   
+      parameters:          
+        - in: query
+          name: id
+          schema:
+            type: integer 
+            example : 0
+          required: true   
+      responses:
+        '200':
+          description: Ok...!
+        '210':
+          description: getOne - empty...!
+        '400':
+          description: validation error  
+        '403':
+          description: Access Denied...!  
+    post:
+      tags:
+        - test
+      summary: Create test.
+      description: New test.       
+      operationId: addtest
+      requestBody:        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addtest'   
+        required: true         
+      responses:
+        '201':
+          description: Created...!
+        '400':
+          description: validation error
+        '403':
+          description: Access Denied...!  
+    put:
+      tags:
+        - test
+      summary: Update test.
+      description: Modify test.       
+      operationId: updatetest
+      requestBody:        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updatetest'   
+        required: true         
+      responses:
+        '200':
+          description: Ok / Update test...!
+        '400':
+          description: validation error / Sql Errors
+        '403':
+          description: Access Denied...!  
+    delete:
+      tags:
+        - test
+      summary: Delete test.
+      description: delete 
+      operationId: deletetest.
+      parameters:         
+        - in: query
+          name: id
+          schema:
+            type: integer 
+            example : 0
+          required: true             
+      responses:
+        '200':
+          description: Ok...!
+        '400':
+          description: validation error
+        '403':
+          description: Access Denied...!    
+  # modulo test 
+#//////////////////////////////////////////////////////////////////////////////////////////          
+components:
+  schemas:
+    sendLogin:
+      type: object
+      properties:
+        email:
+          type: string          
+          example: memberjhondow
+        otp:
+          type: string
+          example: clavedow
+    addtest:
+      type: object
+      properties:
+        idCompany:
+          type: integer          
+          example: 0
+        idVideo:
+          type: integer
+          example: 0
+        typetest:
+          type: integer
+          example: 0
+        title:
+          type: string
+          example: test title  
+        description:
+          type: string
+          example: test description 
+        pathImage:
+          type: string
+          example: test/0  
+        urlImage:
+          type: string
+          example: http://url.com/test/0  
+    updatetest:
+      type: object
+      properties:
+        idCompany:
+          type: integer          
+          example: 0
+        idVideo:
+          type: integer
+          example: 0
+        typetest:
+          type: integer
+          example: 0
+        title:
+          type: string
+          example: test title  
+        description:
+          type: string
+          example: test description 
+        pathImage:
+          type: string
+          example: test/0  
+        urlImage:
+          type: string
+          example: http://url.com/test/0  
  
-#   /ws/banner/image:
-#     put:
-#       tags:
-#         - banner
-#       summary: Update Image Banner.
-#       description: Update Image Banner.       
-#       operationId: updateImageBanner
-#       requestBody:        
-#         content:
-#           application/json:
-#             schema:
-#               $ref: '#/components/schemas/updateImageBanner'   
-#         required: true         
-#       responses:
-#         '200':
-#           description: Ok...!
-#         '400':
-#           description: validation error
-#         '403':
-#           description: Access Denied...!       
-#   # modulo user  
+    changeStatus:
+      type: object
+      properties:
+        id:
+          type: integer          
+          example: 15    
+        status:
+          type: integer          
+          example: 1        
+      type: object
 
-# #//////////////////////////////////////////////////////////////////////////////////////////          
-# components:
-#   schemas:
-#     sendLoginMember:
-#       type: object
-#       properties:
-#         username:
-#           type: string          
-#           example: memberjhondow
-#         password:
-#           type: string
-#           example: clavedow
-#     sendLoginUser:
-#       type: object
-#       properties:
-#         username:
-#           type: string          
-#           example: userjhondow
-#         password:
-#           type: string
-#           example: clavedow
-#     addBanner:
-#       type: object
-#       properties:
-#         idCompany:
-#           type: integer          
-#           example: 0
-#         idVideo:
-#           type: integer
-#           example: 0
-#         typeBanner:
-#           type: integer
-#           example: 0
-#         title:
-#           type: string
-#           example: banner title  
-#         description:
-#           type: string
-#           example: banner description 
-#         pathImage:
-#           type: string
-#           example: banner/0  
-#         urlImage:
-#           type: string
-#           example: http://url.com/banner/0  
-#     updateBanner:
-#       type: object
-#       properties:
-#         id:
-#           type: integer          
-#           example: 15
-#         idCompany:
-#           type: integer          
-#           example: 0
-#         idVideo:
-#           type: integer
-#           example: 0
-#         typeBanner:
-#           type: integer
-#           example: 0
-#         title:
-#           type: string
-#           example: banner title  
-#         description:
-#           type: string
-#           example: banner description 
-#         pathImage:
-#           type: string
-#           example: banner/0  
-#         urlImage:
-#           type: string
-#           example: http://url.com/banner/0  
-#     updateImageBanner:
-#       type: object
-#       properties:
-#         id:
-#           type: integer          
-#           example: 15    
-#         pathImage:
-#           type: string          
-#           example: banner/0        
-#         urlImage:
-#           type: string          
-#           example: http://url.com/banner/0       
-#       type: object
-
-#     changeStatus:
-#       type: object
-#       properties:
-#         id:
-#           type: integer          
-#           example: 15    
-#         status:
-#           type: integer          
-#           example: 1        
-#       type: object
-
-#   securitySchemes:
-#     bearerAuth: # arbitrary name for the security scheme
-#       type: http
-#       scheme: bearer                     
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer                     
          
 
-# security:
-#   - bearerAuth: []
+security:
+  - bearerAuth: []
