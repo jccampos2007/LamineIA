@@ -1,14 +1,14 @@
 {
-  "name": "wschatgpt",
+  "name": "wslamineia",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
   "scripts": {
     "dev": "nodemon ./src/main.js",
-    "prod": "pm2 start ./src/main.js --name 'wschatgpt'",
+    "prod": "pm2 start ./src/main.js --name 'wslamineia'",
     "rs": "pm2 restart all",
     "generate-key": "npx web-push generate-vapid-keys [--json]",
-    "start": "pm2 start ./src/main.js --name 'wschatgpt'"
+    "start": "pm2 start ./src/main.js --name 'wslamineia'"
   },
   "repository": {
     "type": "git",
