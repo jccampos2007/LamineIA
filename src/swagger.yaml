@@ -1,13 +1,15 @@
 openapi: 3.0.3
 info:
-  title: WS Elearning Dev - OpenAPI 3.0  
+  title: WS LamineIA - OpenAPI 3.0  
   version: 0.0.1
 servers:  
-  - url: http://localhost:3000     
-  - url: https://wselearnigdev.gosmartcrm.com:3000
+  - url: http://localhost:4800     
+  - url: https://wslamineia.gosmartcrm.com:4800
 tags:
   - name: auth
     description: Identification   
+  - name: user
+    description: Administration   
   - name: test
     description: Administration   
 paths:
@@ -18,7 +20,7 @@ paths:
         - auth
       summary: Login
       description: Session Start.
-      operationId: login
+      operationId: sendLogin
       requestBody:
         description: Init Session
         content:
@@ -33,14 +35,98 @@ paths:
           description: validation error
   # modulo login      
 
+  # modulo user       
+  /ws/user:
+    get:
+      tags:
+        - user
+      summary: Get One user.
+      description:  One user.
+      operationId: userGetOne   
+      parameters:          
+        - in: query
+          name: id
+          schema:
+            type: integer 
+            example : 0
+          required: true   
+      responses:
+        '200':
+          description: Ok...!
+        '210':
+          description: getOne - empty...!
+        '400':
+          description: validation error  
+        '403':
+          description: Access Denied...!  
+    post:
+      tags:
+        - user
+      summary: Create user.
+      description: New user.       
+      operationId: adduser
+      requestBody:        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/adduser'   
+        required: true         
+      responses:
+        '201':
+          description: Created...!
+        '400':
+          description: validation error
+        '403':
+          description: Access Denied...!  
+    put:
+      tags:
+        - user
+      summary: Update user.
+      description: Modify user.       
+      operationId: updateuser
+      requestBody:        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateuser'   
+        required: true         
+      responses:
+        '200':
+          description: Ok / Update user...!
+        '400':
+          description: validation error / Sql Errors
+        '403':
+          description: Access Denied...!  
+    delete:
+      tags:
+        - user
+      summary: Delete user.
+      description: delete 
+      operationId: deleteuser.
+      parameters:         
+        - in: query
+          name: id
+          schema:
+            type: integer 
+            example : 0
+          required: true             
+      responses:
+        '200':
+          description: Ok...!
+        '400':
+          description: validation error
+        '403':
+          description: Access Denied...!    
+  # modulo user 
+
   # modulo test       
   /ws/test:
     get:
       tags:
         - test
-      summary: Get One test.
-      description:  One test.
-      operationId: testGetOne   
+      summary: Get One user.
+      description:  One user.
+      operationId: userGetOne   
       parameters:          
         - in: query
           name: id
@@ -60,14 +146,14 @@ paths:
     post:
       tags:
         - test
-      summary: Create test.
-      description: New test.       
-      operationId: addtest
+      summary: Create user.
+      description: New user.       
+      operationId: adduser
       requestBody:        
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/addtest'   
+              $ref: '#/components/schemas/adduser'   
         required: true         
       responses:
         '201':
@@ -79,18 +165,18 @@ paths:
     put:
       tags:
         - test
-      summary: Update test.
-      description: Modify test.       
-      operationId: updatetest
+      summary: Update user.
+      description: Modify user.       
+      operationId: updateuser
       requestBody:        
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/updatetest'   
+              $ref: '#/components/schemas/updateuser'   
         required: true         
       responses:
         '200':
-          description: Ok / Update test...!
+          description: Ok / Update user...!
         '400':
           description: validation error / Sql Errors
         '403':
@@ -98,9 +184,9 @@ paths:
     delete:
       tags:
         - test
-      summary: Delete test.
+      summary: Delete user.
       description: delete 
-      operationId: deletetest.
+      operationId: deleteuser.
       parameters:         
         - in: query
           name: id
@@ -124,58 +210,25 @@ components:
       properties:
         email:
           type: string          
-          example: memberjhondow
+          example: user@gmail.com
         otp:
           type: string
-          example: clavedow
-    addtest:
+          example: 123456
+    adduser:
       type: object
       properties:
-        idCompany:
-          type: integer          
-          example: 0
-        idVideo:
-          type: integer
-          example: 0
-        typetest:
-          type: integer
-          example: 0
-        title:
-          type: string
-          example: test title  
-        description:
-          type: string
-          example: test description 
-        pathImage:
-          type: string
-          example: test/0  
-        urlImage:
-          type: string
-          example: http://url.com/test/0  
-    updatetest:
+        email:
+          type: string          
+          example: "user@gmail.com"
+    updateuser:
       type: object
       properties:
-        idCompany:
-          type: integer          
-          example: 0
-        idVideo:
+        id:
           type: integer
-          example: 0
-        typetest:
-          type: integer
-          example: 0
-        title:
-          type: string
-          example: test title  
-        description:
-          type: string
-          example: test description 
-        pathImage:
-          type: string
-          example: test/0  
-        urlImage:
-          type: string
-          example: http://url.com/test/0  
+          example: 100
+        email:
+          type: string          
+          example: "user@gmail.com"
  
     changeStatus:
       type: object
