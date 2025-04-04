@@ -9,7 +9,7 @@ async function getAll(data) {
         let sql = `SELECT * FROM subscribers`;            
         let outsql = await SQL(sql);
 
-        return out = { code: 200, method: 'Get All', message: 'OK', data: outsql };   
+        return out = { code: 200, method: 'Get All', message: 'OK', data: toCamelCase(outsql) };   
          
     } catch (error) {
         return ({ code: 400, message: 'Sql Errors', error: error.sqlMessage });
@@ -37,10 +37,10 @@ async function getOne(data) {
 
 async function add(data) {
     try {
-        const { id_user, period, apiKey } = data;
+        const { idUser, period, apiKey } = data;
         const createdAt = moment().format('YYYY-MM-DD HH:mm:ss');
         
-        let sql = `INSERT INTO subscribers (id_user, period, api_key, createdAt) VALUES (${id_user}, '${period}', '${apiKey}', '${createdAt}');`;                   
+        let sql = `INSERT INTO subscribers (id_user, period, api_key, createdAt) VALUES (${idUser}, '${period}', '${apiKey}', '${createdAt}');`;                   
         let outsql = await SQL(sql);
         let id = outsql.insertId;
         
