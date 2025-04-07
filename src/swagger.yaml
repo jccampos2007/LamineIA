@@ -12,6 +12,8 @@ tags:
     description: Administration   
   - name: subscribers
     description: Administration   
+  - name: paymenttype
+    description: Administration 
 paths:
   # module login
   /ws/auth/login:
@@ -187,9 +189,9 @@ paths:
     get:
       tags:
         - subscribers
-      summary: Get One subscribers.
-      description:  One subscribers.
-      operationId: userGetAll      
+      summary: Get All subscribers.
+      description:  All subscribers.
+      operationId: userGetAll    
       responses:
         '200':
           description: Ok...!
@@ -199,7 +201,109 @@ paths:
           description: validation error  
         '403':
           description: Access Denied...!      
-  # modulo test 
+  # modulo subscribers
+
+  # modulo paymenttype 
+
+  /ws/paymenttype:
+    get:
+      tags:
+        - paymenttype
+      summary: Get One paymenttype.
+      description:  One paymenttype.
+      operationId: userGetOne   
+      parameters:          
+        - in: query
+          name: id
+          schema:
+            type: integer 
+            example : 0
+          required: true   
+      responses:
+        '200':
+          description: Ok...!
+        '210':
+          description: getOne - empty...!
+        '400':
+          description: validation error  
+        '403':
+          description: Access Denied...!  
+    post:
+      tags:
+        - paymenttype
+      summary: Create paymenttype.
+      description: New paymenttype.       
+      operationId: addpaymenttype.
+      requestBody:        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addpaymenttype'   
+        required: true         
+      responses:
+        '201':
+          description: Created...!
+        '400':
+          description: validation error
+        '403':
+          description: Access Denied...!  
+    put:
+      tags:
+        - paymenttype
+      summary: Update paymenttype.
+      description: Modify paymenttype.       
+      operationId: updatepaymenttype
+      requestBody:        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updatepaymenttype'   
+        required: true         
+      responses:
+        '200':
+          description: Ok / Update user...!
+        '400':
+          description: validation error / Sql Errors
+        '403':
+          description: Access Denied...!  
+    delete:
+      tags:
+        - paymenttype
+      summary: Delete paymenttype.
+      description: delete 
+      operationId: deletepaymenttype.
+      parameters:         
+        - in: query
+          name: id
+          schema:
+            type: integer 
+            example : 0
+          required: true             
+      responses:
+        '200':
+          description: Ok...!
+        '400':
+          description: validation error
+        '403':
+          description: Access Denied...!
+  /ws/paymenttype/list:
+    get:
+      tags:
+        - paymenttype
+      summary: Get All paymenttype.
+      description:  All paymenttype.
+      operationId: paymenttypeGetAll      
+      responses:
+        '200':
+          description: Ok...!
+        '210':
+          description: getAll - empty...!
+        '400':
+          description: validation error  
+        '403':
+          description: Access Denied...!          
+          
+          # Modulo paymenttype 
 #//////////////////////////////////////////////////////////////////////////////////////////          
 components:
   schemas:
@@ -240,6 +344,33 @@ components:
             apiKey: 
               type: string
               example: "gr5g18g5s1gv53s1dv8sd4g"
+    addpaymenttype:
+          type: object
+          properties:
+            name:
+              type: string    
+              example: "paypal"
+            paymentGateway:
+              type: string 
+              example: "paypal"
+    updatepaymenttype:
+          type: object
+          properties:
+            id:
+              type: integer   
+              example: 1
+            name:
+              type: string 
+              example: "paypal" 
+            paymentGateway:
+              type: string  
+              example: "paypal"
+            status:
+              type: integer 
+              example: 1
+            
+
+
 
     changeStatus:
       type: object
