@@ -4,7 +4,7 @@ info:
   version: 0.0.1
 servers:  
   - url: http://localhost:4800     
-  - url: https://wslamineia.gosmartcrm.com:4800
+  - url: https://wslamineia.academys.io:4800
 tags:
   - name: auth
     description: Identification   

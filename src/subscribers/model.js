@@ -24,7 +24,7 @@ async function getOne(data) {
         let outsql = await SQL(sql);
 
         if (outsql.length != 0) {
-            out = { code: 200, method: 'Get One', message: 'OK', data: outsql };   
+            out = { code: 200, method: 'Get One', message: 'OK', data: toCamelCase(outsql)[0] };   
         } else {  
             out = { code: 210, method: 'Get One', message: 'subscribers Not Found...!' };
         }   
