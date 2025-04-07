@@ -14,6 +14,8 @@ tags:
     description: Administration   
   - name: paymenttype
     description: Administration 
+  - name: chat
+    description: Administration
 paths:
   # module login
   /ws/auth/login:
@@ -304,7 +306,30 @@ paths:
           description: Access Denied...!          
           
           # Modulo paymenttype 
-#//////////////////////////////////////////////////////////////////////////////////////////          
+          # Modulo chat 
+
+  /ws/chat:      
+    post:
+      tags:
+        - chat
+      summary: chat.
+      description: New chat.       
+      operationId: newchat.
+      requestBody:        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/newchat'   
+        required: true         
+      responses:
+        '200':
+          description: Success...!
+        '400':
+          description: validation error
+        '403':
+          description: Access Denied...!    
+#//////////////////////////////////////////////////////////////////////////////////////////     
+
 components:
   schemas:
     sendLogin:
@@ -368,7 +393,16 @@ components:
             status:
               type: integer 
               example: 1
-            
+    newchat:
+          type: object
+          properties:
+            message:
+              type: string    
+              example: "Que dia es hoy?"
+            intelligence:
+              type: string 
+              example: "groq - huggingface"  
+              #Modulo chat       
 
 
 
