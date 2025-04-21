@@ -18,6 +18,8 @@ tags:
     description: Administration
   - name: paymentdetails
     description: Administration   
+  - name: loghistory
+    description: Administration     
 paths:
   # module login
   /ws/auth/login:
@@ -457,7 +459,110 @@ paths:
         '400':
           description: validation error / Sql Errors
         '403':
-          description: Access Denied...!     
+          description: Access Denied...!   
+
+          # modulo paymentdetails  
+
+  /ws/loghistory:
+    get:
+      tags:
+        - loghistory
+      summary: Get One loghistory.
+      description:  One loghistory.
+      operationId: userGetOne   
+      parameters:          
+        - in: query
+          name: id
+          schema:
+            type: integer 
+            example : 0
+          required: true   
+      responses:
+        '200':
+          description: Ok...!
+        '210':
+          description: getOne - empty...!
+        '400':
+          description: validation error  
+        '403':
+          description: Access Denied...!  
+    post:
+      tags:
+        - loghistory
+      summary: Create loghistory.
+      description: New loghistory.       
+      operationId: addloghistory.
+      requestBody:        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addloghistory'   
+        required: true         
+      responses:
+        '201':
+          description: Created...!
+        '400':
+          description: validation error
+        '403':
+          description: Access Denied...!  
+    put:
+      tags:
+        - loghistory
+      summary: Update loghistory.
+      description: Modify loghistory.       
+      operationId: updateloghistory
+      requestBody:        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateloghistory'   
+        required: true         
+      responses:
+        '200':
+          description: Ok / Update user...!
+        '400':
+          description: validation error / Sql Errors
+        '403':
+          description: Access Denied...!  
+    delete:
+      tags:
+        - loghistory
+      summary: Delete loghistory.
+      description: loghistory 
+      operationId: deleteloghistory.
+      parameters:         
+        - in: query
+          name: id
+          schema:
+            type: integer 
+            example : 0
+          required: true             
+      responses:
+        '200':
+          description: Ok...!
+        '400':
+          description: validation error
+        '403':
+          description: Access Denied...!
+  /ws/loghistory/list:
+    get:
+      tags:
+        - loghistory
+      summary: Get All loghistory.
+      description:  All loghistory.
+      operationId: loghistoryGetAll      
+      responses:
+        '200':
+          description: Ok...!
+        '210':
+          description: getAll - empty...!
+        '400':
+          description: validation error  
+        '403':
+          description: Access Denied...!          
+          
+          # Modulo loghistory
+                 
 
 #//////////////////////////////////////////////////////////////////////////////////////////     
 
@@ -566,7 +671,39 @@ components:
             id:
               type: integer   
               example: 0
-       
+    addloghistory:
+          type: object
+          properties:
+            idUser:
+              type: integer   
+              example: 0
+            uuId:
+              type: string
+              example: "abc123"
+            message:
+              type: string
+              example: "message" 
+            type:
+              type: integer
+              example: 0        
+    updateloghistory:
+          type: object
+          properties:
+            id:
+              type: integer   
+              example: 0
+            idUser:
+              type: integer
+              example: 0
+            uuId:
+              type: string 
+              example: "abc123"
+            message:
+              type: string 
+              example: "message" 
+            type:
+              type: integer  
+              example: 0          
             
                                    
 
