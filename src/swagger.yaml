@@ -16,6 +16,10 @@ tags:
     description: Administration 
   - name: chat
     description: Administration
+  - name: paymentdetails
+    description: Administration   
+  - name: loghistory
+    description: Administration     
 paths:
   # module login
   /ws/auth/login:
@@ -306,8 +310,9 @@ paths:
           description: Access Denied...!          
           
           # Modulo paymenttype 
+         
           # Modulo chat 
-
+   
   /ws/chat:      
     post:
       tags:
@@ -327,7 +332,238 @@ paths:
         '400':
           description: validation error
         '403':
-          description: Access Denied...!    
+          description: Access Denied...!   
+
+          #Modulo chat 
+
+# modulo paymentdetails
+
+  /ws/paymentdetails:
+    get:
+      tags:
+        - paymentdetails
+      summary: Get One paymentdetails.
+      description:  One paymentdetails.
+      operationId: userGetOne   
+      parameters:          
+        - in: query
+          name: id
+          schema:
+            type: integer 
+            example : 0
+          required: true   
+      responses:
+        '200':
+          description: Ok...!
+        '210':
+          description: getOne - empty...!
+        '400':
+          description: validation error  
+        '403':
+          description: Access Denied...!  
+    post:
+      tags:
+        - paymentdetails
+      summary: Create paymentdetails.
+      description: New paymentdetails.       
+      operationId: addpaymentdetails.
+      requestBody:        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addpaymentdetails'   
+        required: true         
+      responses:
+        '201':
+          description: Created...!
+        '400':
+          description: validation error
+        '403':
+          description: Access Denied...!  
+    put:
+      tags:
+        - paymentdetails
+      summary: Update paymentdetails.
+      description: Modify paymentdetails.       
+      operationId: updatepaymentdetails
+      requestBody:        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updatepaymentdetails'   
+        required: true         
+      responses:
+        '200':
+          description: Ok / Update user...!
+        '400':
+          description: validation error / Sql Errors
+        '403':
+          description: Access Denied...!  
+    delete:
+      tags:
+        - paymentdetails
+      summary: Delete paymentdetails.
+      description: delete 
+      operationId: deletepaymentdetails.
+      parameters:         
+        - in: query
+          name: id
+          schema:
+            type: integer 
+            example : 0
+          required: true             
+      responses:
+        '200':
+          description: Ok...!
+        '400':
+          description: validation error
+        '403':
+          description: Access Denied...!
+  /ws/paymentdetails/list:
+    get:
+      tags:
+        - paymentdetails
+      summary: Get All paymentdetails.
+      description:  All paymentdetails.
+      operationId: paymentdetailsGetAll      
+      responses:
+        '200':
+          description: Ok...!
+        '210':
+          description: getAll - empty...!
+        '400':
+          description: validation error  
+        '403':
+          description: Access Denied...!          
+          
+          # Modulo paymentdetails
+
+  /ws/paymentdetails/confirm: 
+    put:
+      tags:
+        - paymentdetails
+      summary: confirm paymentdetails.
+      description: confirm paymentdetails.       
+      operationId: confirmpaymentdetails
+      requestBody:        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/confirmpaymentdetails'   
+        required: true         
+      responses:
+        '200':
+          description: Ok / confirm ...!
+        '210':
+          description: subscriber not found 
+        '400':
+          description: validation error / Sql Errors
+        '403':
+          description: Access Denied...!   
+
+          # modulo paymentdetails  
+
+  /ws/loghistory:
+    get:
+      tags:
+        - loghistory
+      summary: Get One loghistory.
+      description:  One loghistory.
+      operationId: userGetOne   
+      parameters:          
+        - in: query
+          name: id
+          schema:
+            type: integer 
+            example : 0
+          required: true   
+      responses:
+        '200':
+          description: Ok...!
+        '210':
+          description: getOne - empty...!
+        '400':
+          description: validation error  
+        '403':
+          description: Access Denied...!  
+    post:
+      tags:
+        - loghistory
+      summary: Create loghistory.
+      description: New loghistory.       
+      operationId: addloghistory.
+      requestBody:        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addloghistory'   
+        required: true         
+      responses:
+        '201':
+          description: Created...!
+        '400':
+          description: validation error
+        '403':
+          description: Access Denied...!  
+    put:
+      tags:
+        - loghistory
+      summary: Update loghistory.
+      description: Modify loghistory.       
+      operationId: updateloghistory
+      requestBody:        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateloghistory'   
+        required: true         
+      responses:
+        '200':
+          description: Ok / Update user...!
+        '400':
+          description: validation error / Sql Errors
+        '403':
+          description: Access Denied...!  
+    delete:
+      tags:
+        - loghistory
+      summary: Delete loghistory.
+      description: loghistory 
+      operationId: deleteloghistory.
+      parameters:         
+        - in: query
+          name: id
+          schema:
+            type: integer 
+            example : 0
+          required: true             
+      responses:
+        '200':
+          description: Ok...!
+        '400':
+          description: validation error
+        '403':
+          description: Access Denied...!
+  /ws/loghistory/list:
+    get:
+      tags:
+        - loghistory
+      summary: Get All loghistory.
+      description:  All loghistory.
+      operationId: loghistoryGetAll      
+      responses:
+        '200':
+          description: Ok...!
+        '210':
+          description: getAll - empty...!
+        '400':
+          description: validation error  
+        '403':
+          description: Access Denied...!          
+          
+          # Modulo loghistory
+                 
+
 #//////////////////////////////////////////////////////////////////////////////////////////     
 
 components:
@@ -402,7 +638,74 @@ components:
             intelligence:
               type: string 
               example: "groq - huggingface"  
-              #Modulo chat       
+    addpaymentdetails:
+          type: object
+          properties:
+            idSubscribers:
+              type: integer   
+              example: 1
+            idPayMethod:
+              type: integer
+              example: 1
+            amount:
+              type: string
+              example: "1.1"       
+    updatepaymentdetails:
+          type: object
+          properties:
+            id:
+              type: integer   
+              example: 0
+            idSubscribers:
+              type: integer
+              example: 0
+            idPayMethod:
+              type: integer  
+              example: 0
+            amount:
+              type: string 
+              example: "1.1"         
+    confirmpaymentdetails:
+          type: object
+          properties:
+            id:
+              type: integer   
+              example: 0
+    addloghistory:
+          type: object
+          properties:
+            idUser:
+              type: integer   
+              example: 0
+            uuId:
+              type: string
+              example: "abc123"
+            message:
+              type: string
+              example: "message" 
+            type:
+              type: integer
+              example: 0        
+    updateloghistory:
+          type: object
+          properties:
+            id:
+              type: integer   
+              example: 0
+            idUser:
+              type: integer
+              example: 0
+            uuId:
+              type: string 
+              example: "abc123"
+            message:
+              type: string 
+              example: "message" 
+            type:
+              type: integer  
+              example: 0          
+            
+                                   
 
 
 
