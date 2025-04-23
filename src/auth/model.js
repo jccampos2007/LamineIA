@@ -11,7 +11,6 @@ async function login(data) {
 
         let sql = `SELECT * FROM user WHERE email = '${email}';`;
         let outsql = await SQL(sql);
-        console.log(outsql.length, outsql);
 
         if (outsql.length == 0) {
             const createdAt = moment().format('YYYY-MM-DD HH:mm:ss');
