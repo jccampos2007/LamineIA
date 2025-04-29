@@ -20,6 +20,8 @@ tags:
     description: Administration   
   - name: loghistory
     description: Administration     
+  - name: paymethod
+    description: Administration  
 paths:
   # module login
   /ws/auth/login:
@@ -562,6 +564,109 @@ paths:
           description: Access Denied...!          
           
           # Modulo loghistory
+
+          # Modulo paymethod
+
+  /ws/paymethod:
+    get:
+      tags:
+        - paymethod
+      summary: Get One paymethod.
+      description:  One paymethod.
+      operationId: userGetOne   
+      parameters:          
+        - in: query
+          name: id
+          schema:
+            type: integer 
+            example : 0
+          required: true   
+      responses:
+        '200':
+          description: Ok...!
+        '210':
+          description: getOne - empty...!
+        '400':
+          description: validation error  
+        '403':
+          description: Access Denied...!  
+    post:
+      tags:
+        - paymethod
+      summary: Create paymethod.
+      description: New paymethod.       
+      operationId: addpaymethod.
+      requestBody:        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addpaymethod'   
+        required: true         
+      responses:
+        '201':
+          description: Created...!
+        '400':
+          description: validation error
+        '403':
+          description: Access Denied...!  
+    put:
+      tags:
+        - paymethod
+      summary: Update paymethod.
+      description: Modify paymethod.       
+      operationId: updatepaymethod
+      requestBody:        
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updatepaymethod'   
+        required: true         
+      responses:
+        '200':
+          description: Ok / Update user...!
+        '400':
+          description: validation error / Sql Errors
+        '403':
+          description: Access Denied...!  
+    delete:
+      tags:
+        - paymethod
+      summary: Delete paymethod.
+      description: paymethod 
+      operationId: deletepaymethod.
+      parameters:         
+        - in: query
+          name: id
+          schema:
+            type: integer 
+            example : 0
+          required: true             
+      responses:
+        '200':
+          description: Ok...!
+        '400':
+          description: validation error
+        '403':
+          description: Access Denied...!
+  /ws/paymethod/list:
+    get:
+      tags:
+        - paymethod
+      summary: Get All paymethod.
+      description:  All paymethod.
+      operationId: paymethodGetAll      
+      responses:
+        '200':
+          description: Ok...!
+        '210':
+          description: getAll - empty...!
+        '400':
+          description: validation error  
+        '403':
+          description: Access Denied...!   
+
+          # Modulo paymethod       
+                  
                  
 
 #//////////////////////////////////////////////////////////////////////////////////////////     
@@ -703,7 +808,30 @@ components:
               example: "message" 
             type:
               type: integer  
-              example: 0          
+              example: 0    
+
+    addpaymethod:
+          type: object
+          properties:
+            idPaymentType:
+              type: integer
+              example: 0
+            methodInfJson:
+              type: string 
+              example: "abc123"  
+    updatepaymethod:
+          type: object
+          properties:
+            id:
+              type: integer   
+              example: 0
+            idPaymentType:
+              type: integer
+              example: 0
+            methodInfJson:
+              type: string 
+              example: "abc123"
+                                 
             
                                    
 
