@@ -2,6 +2,7 @@ const AIProvider = require('../../class/providerAI');
 const { SQL } = require("../../libs/tools");
 const moment = require('moment');
 const Token = require('../../libs/token');
+const mysql = require('mysql2'); // o mysql2 si usas ese paquete
 
 async function chat(data, header) {
     try {
@@ -10,6 +11,8 @@ async function chat(data, header) {
         const user = Token.getDateToken(token);
         let idUser = user.sub.id;
         let date = moment().format('YYYY-MM-DD HH:mm:ss');
+        console.log(data);
+        
 
         if (!intelligence || !message) {
             return { code: 400, message: 'Faltan parámetros requeridos.' };
@@ -26,14 +29,18 @@ async function chat(data, header) {
 
         let escapedFilesSent = JSON.stringify(filesSent).replace(/\\/g, '\\\\'); // Escapa las barras invertidas
 
-        let sql = `INSERT INTO log_history (id_user, message, files, type, createdAt) VALUES(${idUser}, "${message}", '${escapedFilesSent}', 1, '${date}')`;
+        const escapedMessage = mysql.escape(message);
+        let sql = `INSERT INTO log_history (id_user, message, files, type, createdAt) VALUES(${idUser}, ${escapedMessage}, '${escapedFilesSent}', 1, '${date}')`;
         await SQL(sql);
-        let explication = `y adicional explica el porque se hace de esa forma\n`;
+        let orden = ``;
+        let explication = `y adicional dame al final un area llamada estrictamente **Explicación:** con el porque se hace de esa forma\n`;
 
-        const prompt = `${message}\n${validFiles.join('\n')}\n${explication}`;
+        if (files != []) orden = `a cada respuesta asegurate de que tengan la ruta correspondiente de a cual archivo pertenece esa respuesta en el mismo formato ${escapedFilesSent} no quiero que sea entre ** quiero que sea entre corchetes []\n`;
+
+        const prompt = `${message}\n${validFiles.join('\n')}\n${explication}\n${orden}`;
 
         let response = await AIProvider.request(intelligence, prompt);
-        // console.log(response);
+        console.log(response);
 
         out = { code: 200, message: 'Success', data: response };
 
@@ -53,13 +60,14 @@ async function test(data, header) {
         const { message, intelligence, files = [] } = data;
         const { token } = header;
         const user = Token.getDateToken(token);
-        let idUser = user.sub.id;
+        let idUser = user.sub.id;        
         let date = moment().format('YYYY-MM-DD HH:mm:ss');
 
         if (!intelligence || !message) {
             return { code: 400, message: 'Faltan parámetros requeridos.' };
         }
 
+        
         const validFiles = Array.isArray(files) && files.length > 0
             ? files.map(file => `\n[Archivo: ${file.filename} - ${file.type} - ${file.path}]\n${file.content || '(Sin contenido)'}`)
             : [];
@@ -70,15 +78,20 @@ async function test(data, header) {
         }).filter(Boolean); // Filtra los valores nulos
 
         let escapedFilesSent = JSON.stringify(filesSent).replace(/\\/g, '\\\\'); // Escapa las barras invertidas
-
-        let sql = `INSERT INTO log_history (id_user, message, files, type, createdAt) VALUES(${idUser}, "${message}", '${escapedFilesSent}', 1, '${date}')`;
+        
+        
+        const escapedMessage = mysql.escape(message);
+        let sql = `INSERT INTO log_history (id_user, message, files, type, createdAt) VALUES(${idUser}, ${escapedMessage}, '${escapedFilesSent}', 1, '${date}')`;
         await SQL(sql);
-        let explication = `y adicional explica el porque se hace de esa forma\n`;
+        let orden = ``;
+        let explication = `y adicional dame al final un area llamada estrictamente **Explicación:** con el porque se hace de esa forma\n`;
 
-        const prompt = `${message}\n${validFiles.join('\n')}\n${explication}`;
+        if (files != []) orden = `a cada respuesta asegurate de que tengan la ruta correspondiente de a cual archivo pertenece esa respuesta en el mismo formato ${escapedFilesSent} no quiero que sea entre ** quiero que sea entre corchetes []\n`;
+
+        const prompt = `${message}\n${validFiles.join('\n')}\n${explication}\n${orden}`;
 
         let response = await AIProvider.request(intelligence, prompt);
-        console.log(response);
+        // console.log(response);
 
         out = { code: 200, message: 'Success', data: response };
 
