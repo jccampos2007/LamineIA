@@ -4,9 +4,52 @@ const { SendEmailPassword } = require("../../libs/services");
 const Token = require('../../libs/token');
 const moment = require('moment')
 
+async function paginator(data,headers) {
+    try {
+        let {token} = headers;
+        let {start, lenght, search, order, sort} = data;
+        let user = Token.getDateToken(token);
+        let idUser = user.sub.id;
+        if (search == undefined || search == '') search = '';
+
+        let sql = `SELECT count(sb.id) as recordsTotal FROM subscribers sb
+                     INNER JOIN user u ON sb.id_user = u.id;`;
+        let outsql = await SQL(sql);
+        let recordsTotal = outsql[0].recordsTotal;
+
+        sql = `SELECT count(sb.id) as recordsFiltered 
+                FROM subscribers sb
+                     INNER JOIN user u ON sb.id_user = u.id 
+                     WHERE (sb.period LIKE CONCAT('%', '${search}', '%') OR 
+                            u.email LIKE CONCAT('%', '${search}', '%'))`
+        outsql = await SQL(sql);
+        let recordsFiltered = outsql[0].recordsFiltered;
+
+        sql = `SELECT sb.*, u.email
+                FROM subscribers sb
+                     INNER JOIN user u ON sb.id_user = u.id 
+                     WHERE (sb.period LIKE CONCAT('%', '${search}', '%') OR 
+                            u.email LIKE CONCAT('%', '${search}', '%')) 
+                ORDER BY sb.id ${order} LIMIT ${start}, ${lenght}`; 
+        outsql = await SQL(sql);        
+        let list = toCamelCase(outsql);
+
+        let out = {
+            code: 200,
+            message: "Paginator...!",
+            data: { recordsTotal, recordsFiltered, list }
+          };
+      
+          return out;
+
+    } catch (error) {
+        return ({ code: 400, message: 'Sql Errors', error: error.sqlMessage });
+    }
+}
+
 async function getAll(data) {
     try {
-        let sql = `SELECT * FROM subscribers`;            
+        let sql = `SELECT s.*,u.email FROM subscribers s INNER JOIN user u ON s.id_user = u.id`;            
         let outsql = await SQL(sql);
 
         return out = { code: 200, method: 'Get All', message: 'OK', data: toCamelCase(outsql) };   
@@ -73,5 +116,6 @@ module.exports = {
     getAll,
     getOne,
     add,
-    deleted
+    deleted,
+    paginator
 }

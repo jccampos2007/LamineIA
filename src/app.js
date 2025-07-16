@@ -23,6 +23,7 @@ app.use(require('./subscribers/routes.js'));
 app.use(require('./paymenttype/routes.js'));
 app.use(require('./paymentdetails/routes.js'));
 app.use(require('./loghistory/routes.js'));
+app.use(require('./paymethod/routes.js'));
 ////////////////////////////////////////////
 
 // api-doc

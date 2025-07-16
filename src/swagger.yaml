@@ -427,7 +427,13 @@ paths:
         - paymentdetails
       summary: Get All paymentdetails.
       description:  All paymentdetails.
-      operationId: paymentdetailsGetAll      
+      operationId: paymentdetailsGetAll   
+      parameters:          
+        - in: query
+          name: idSubscribers
+          schema:
+            type: integer 
+            example : 0   
       responses:
         '200':
           description: Ok...!
@@ -655,6 +661,12 @@ paths:
       summary: Get All paymethod.
       description:  All paymethod.
       operationId: paymethodGetAll      
+      parameters:          
+        - in: query
+          name: idPaymentType
+          schema:
+            type: integer 
+            example : 0
       responses:
         '200':
           description: Ok...!
@@ -779,36 +791,30 @@ components:
     addloghistory:
           type: object
           properties:
-            idUser:
-              type: integer   
-              example: 0
-            uuId:
-              type: string
-              example: "abc123"
             message:
               type: string
+              example: "abc123"
+            response:
+              type: string
               example: "message" 
-            type:
-              type: integer
-              example: 0        
+            files:
+              type: string
+              example: []      
     updateloghistory:
           type: object
           properties:
             id:
               type: integer   
               example: 0
-            idUser:
-              type: integer
-              example: 0
-            uuId:
-              type: string 
-              example: "abc123"
             message:
               type: string 
+              example: "abc123"
+            response:
+              type: string 
               example: "message" 
-            type:
-              type: integer  
-              example: 0    
+            files:
+              type: string  
+              example: []    
 
     addpaymethod:
           type: object

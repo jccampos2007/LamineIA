@@ -4,7 +4,7 @@ const moment = require('moment')
 
 async function getAll(data) {
     try {
-        let sql = `SELECT * FROM payment_type`;            
+        let sql = `SELECT * FROM payment_type WHERE status = 1`;            
         let outsql = await SQL(sql);
 
         return out = { code: 200, method: 'Get All', message: 'OK', data: toCamelCase(outsql) };   
@@ -76,7 +76,7 @@ async function deleted(data) {
     try {
         const { id } = data;
         
-        let sql = `DELETE FROM payment_type WHERE id = ${id}`;     
+        let sql = `UPDATE payment_type SET status = 3 WHERE id = ${id}`;          
         let outsql = await SQL(sql);
         
         return out = { code: 200, method: 'Delete payment_type', message: 'OK', data: outsql };            

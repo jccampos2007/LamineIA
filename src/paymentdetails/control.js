@@ -2,6 +2,12 @@ const { validationResult } = require('express-validator');
 const model = require('./model');
 const { query } = require('express');
  
+async function paginator(req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ code: 400, message: 'Validation Errors', errors: errors.array() });
+    let out = await model.paginator(req.query, req);    
+    res.status(out.code).json(out);           
+}
 
     async function getOne(req, res) {
         const errors = validationResult(req);
@@ -51,5 +57,6 @@ module.exports = {
     add,
     update,
     deleted, 
-    confirm
+    confirm,
+    paginator
 }

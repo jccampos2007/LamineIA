@@ -2,11 +2,56 @@ const { SQL, toCamelCase } = require("../../libs/tools");
 const Token = require('../../libs/token');
 const moment = require('moment')
 
+async function paginator(data,headers) {
+    try {
+        let {token} = headers;
+        let {start, lenght, search, order, sort} = data;
+        let user = Token.getDateToken(token);
+        let idUser = user.sub.id;
+        if (search == undefined || search == '') search = '';
+
+        let sql = `SELECT count(pd.id) as recordsTotal
+                FROM payment_details pd
+                INNER JOIN subscribers sb ON pd.id_subscribers = sb.id
+                INNER JOIN user u ON sb.id_user = u.id;`;
+        let outsql = await SQL(sql);
+        let recordsTotal = outsql[0].recordsTotal;
+
+        sql = `SELECT count(pd.id) as recordsFiltered 
+                FROM payment_details pd
+                INNER JOIN subscribers sb ON pd.id_subscribers = sb.id
+                INNER JOIN user u ON sb.id_user = u.id;`
+                console.log(sql)
+        outsql = await SQL(sql);
+        let recordsFiltered = outsql[0].recordsFiltered;
+
+        sql = `SELECT pd.*, sb.period, u.email
+                FROM payment_details pd
+                INNER JOIN subscribers sb ON pd.id_subscribers = sb.id
+                INNER JOIN user u ON sb.id_user = u.id;`; 
+        outsql = await SQL(sql);        
+        let list = outsql
+
+        let out = {
+            code: 200,
+            message: "Paginator...!",
+            data: { recordsTotal, recordsFiltered, list }
+          };
+      
+          return out;
+
+    } catch (error) {
+        return ({ code: 400, message: 'Sql Errors', error: error.sqlMessage });
+    }
+}
+
 async function getAll(data) {
     try {
-        let sql = `SELECT * FROM payment_details`;            
-        let outsql = await SQL(sql);
+        let { idSubscribers } = data;     
 
+        let sql = `SELECT * FROM payment_details WHERE id_subscribers = ${idSubscribers}`;            
+        let outsql = await SQL(sql);
+        
         return out = { code: 200, method: 'Get All', message: 'OK', data: toCamelCase(outsql) };   
          
     } catch (error) {
@@ -111,5 +156,6 @@ module.exports = {
     add,
     update,
     deleted,
-    confirm
+    confirm,
+    paginator
 }

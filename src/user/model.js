@@ -2,7 +2,43 @@ const { SQL, toCamelCase, generateRandomStringNumber } = require("../../libs/too
 const { createToken } = require("../../libs/token");
 const { SendEmailPassword } = require("../../libs/services");
 const Token = require('../../libs/token');
-const moment = require('moment')
+const moment = require('moment');
+
+async function paginator(data,headers) {
+    try {
+        let {token} = headers;
+        let {start, lenght, search, order, sort} = data;
+        let user = Token.getDateToken(token);
+        let idUser = user.sub.id;
+        if (search == undefined || search == '') search = '';
+
+        let sql = `SELECT count(id) as recordsTotal FROM user`
+        let outsql = await SQL(sql);
+        let recordsTotal = outsql[0].recordsTotal;
+
+        sql = `SELECT count(id) as recordsFiltered 
+            FROM user WHERE ( email LIKE CONCAT('%', '${search}', '%') )`
+        outsql = await SQL(sql);
+        let recordsFiltered = outsql[0].recordsFiltered;
+
+        sql = `SELECT * FROM user
+                WHERE ( email LIKE CONCAT('%', '${search}', '%') )  
+                ORDER BY id ${order} LIMIT ${start}, ${lenght}`; 
+        outsql = await SQL(sql);        
+        let list = toCamelCase(outsql);
+
+        let out = {
+            code: 200,
+            message: "Paginator...!",
+            data: { recordsTotal, recordsFiltered, list }
+          };
+      
+          return out;
+
+    } catch (error) {
+        return ({ code: 400, message: 'Sql Errors', error: error.sqlMessage });
+    }
+}
 
 async function getAll(data) {
     try {
@@ -91,5 +127,6 @@ module.exports = {
     getOne,
     add,
     update,
-    deleted
+    deleted,
+    paginator
 }

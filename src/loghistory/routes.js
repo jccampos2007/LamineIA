@@ -3,6 +3,8 @@ const control = require("./control");
 const validate = require("./validate");
 const {verifyToken} = require('../../libs/token'); 
 
+route.get('/ws/loghistory/paginator', verifyToken, validate.paginator, control.paginator);
+
 route.get('/ws/loghistory', verifyToken, validate.getOne, control.getOne);
 
 route.get('/ws/loghistory/list', verifyToken, control.getAll);
