@@ -4,7 +4,8 @@ const moment = require('moment')
 
 async function getAll(data) {
     try {
-        let sql = `SELECT * FROM pay_method`;            
+        let { idPaymentType } = data; 
+        let sql = `SELECT * FROM pay_method WHERE id_payment_type = ${idPaymentType}`;             
         let outsql = await SQL(sql);
 
         return out = { code: 200, method: 'Get All', message: 'OK', data: toCamelCase(outsql) };   

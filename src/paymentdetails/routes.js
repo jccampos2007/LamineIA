@@ -3,9 +3,11 @@ const control = require("./control");
 const validate = require("./validate");
 const {verifyToken} = require('../../libs/token'); 
 
+route.get('/ws/paymentdetails/paginator', verifyToken, validate.paginator, control.paginator);
+
 route.get('/ws/paymentdetails', verifyToken, validate.getOne, control.getOne);
 
-route.get('/ws/paymentdetails/list', verifyToken, control.getAll);
+route.get('/ws/paymentdetails/list', verifyToken, validate.getAll, control.getAll);
 
 route.post('/ws/paymentdetails', verifyToken, validate.add, control.add);
 

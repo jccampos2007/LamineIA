@@ -7,6 +7,19 @@ const validemail = "It must be a valid email";
 
 
 const loginValidate = {     
+    paginator:[
+        query('start')
+			.notEmpty().withMessage(notempty)
+			.isNumeric().withMessage(notnumeric),
+        query('lenght')
+			.notEmpty().withMessage(notempty)
+			.isNumeric().withMessage(notnumeric),
+        query('order')
+			.notEmpty().withMessage(notempty),
+        query('search')
+			.notEmpty().withMessage(notempty)    
+    ],
+    
     getOne:[
         query('id')
 			.notEmpty().withMessage(notempty)

@@ -3,6 +3,13 @@ const model = require('./model');
 const { query } = require('express');
  
 
+async function paginator(req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(400).json({ code: 400, message: 'Validation Errors', errors: errors.array() });
+    let out = await model.paginator(req.query, req);     
+    res.status(out.code).json(out);     
+}
+
     async function getOne(req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) return res.status(400).json({ code: 400, message: 'Validation Errors', errors: errors.array() });
@@ -13,14 +20,14 @@ const { query } = require('express');
     async function add(req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) return res.status(400).json({ code: 400, message: 'Validation Errors', errors: errors.array() });
-        let out = await model.add(req.body);     
+        let out = await model.add(req.body, req);     
         res.status(out.code).json(out);     
     }
   
     async function update(req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) return res.status(400).json({ code: 400, message: 'Validation Errors', errors: errors.array() });
-        let out = await model.update(req.body);     
+        let out = await model.update(req.body, req);     
         res.status(out.code).json(out);     
     }
 
@@ -34,7 +41,7 @@ const { query } = require('express');
     async function getAll(req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) return res.status(400).json({ code: 400, message: 'Validation Errors', errors: errors.array() });
-        let out = await model.getAll(req.query, req);    
+        let out = await model.getAll(req);    
         res.status(out.code).json(out);           
     }
 
@@ -43,5 +50,6 @@ module.exports = {
     getOne,
     add,
     update,
-    deleted
+    deleted,
+    paginator
 }

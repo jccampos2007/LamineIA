@@ -3,6 +3,8 @@ const control = require("./control");
 const validate = require("./validate");
 const {verifyToken} = require('../../libs/token'); 
 
+route.get('/ws/user/paginator', verifyToken, validate.paginator, control.paginator);
+
 route.get('/ws/user', verifyToken, validate.getOne, control.getOne);
 
 route.get('/ws/user/list', verifyToken, control.getAll);

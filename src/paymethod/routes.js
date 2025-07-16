@@ -5,7 +5,7 @@ const {verifyToken} = require('../../libs/token');
 
 route.get('/ws/paymethod', verifyToken, validate.getOne, control.getOne);
 
-route.get('/ws/paymethod/list', verifyToken, control.getAll);
+route.get('/ws/paymethod/list', verifyToken, validate.getAll, control.getAll);
 
 route.post('/ws/paymethod', verifyToken, validate.add, control.add);
 

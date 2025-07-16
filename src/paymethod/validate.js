@@ -6,6 +6,11 @@ const validemail = "It must be a valid email";
 
 
 const loginValidate = {     
+    getAll:[
+        query('idPaymentType')
+			.notEmpty().withMessage(notempty)
+			.isNumeric().withMessage(notnumeric),
+    ],
     getOne:[
         query('id')
 			.notEmpty().withMessage(notempty)
