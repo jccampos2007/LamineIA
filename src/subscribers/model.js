@@ -11,7 +11,7 @@ async function paginator(data,headers) {
         let user = Token.getDateToken(token);
         let idUser = user.sub.id;
         if (search == undefined || search == '') search = '';
-
+        if (sort == undefined || sort == '') sort = 'id';
         let sql = `SELECT count(sb.id) as recordsTotal FROM subscribers sb
                      INNER JOIN user u ON sb.id_user = u.id;`;
         let outsql = await SQL(sql);
@@ -30,7 +30,7 @@ async function paginator(data,headers) {
                      INNER JOIN user u ON sb.id_user = u.id 
                      WHERE (sb.period LIKE CONCAT('%', '${search}', '%') OR 
                             u.email LIKE CONCAT('%', '${search}', '%')) 
-                ORDER BY sb.id ${order} LIMIT ${start}, ${lenght}`; 
+                ORDER BY sb.${sort} ${order} LIMIT ${start}, ${lenght}`; 
         outsql = await SQL(sql);        
         let list = toCamelCase(outsql);
 

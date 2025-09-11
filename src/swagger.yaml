@@ -127,6 +127,7 @@ paths:
           description: validation error
         '403':
           description: Access Denied...!    
+       
   # modulo user 
 
   # modulo subscribers       
@@ -208,7 +209,54 @@ paths:
         '400':
           description: validation error  
         '403':
-          description: Access Denied...!      
+          description: Access Denied...!   
+  /ws/subscribers/paginator:
+    get:
+      tags:
+        - subscribers
+      summary: Get One subscribers.
+      description:  One subscribers.
+      operationId: subscribersPaginator   
+      parameters:          
+        - in: query
+          name: start
+          schema:
+            type: integer 
+            example : 0
+          required: true   
+        - in: query
+          name: lenght
+          schema:
+            type: integer 
+            example : 0
+          required: true  
+        - in: query
+          name: search
+          schema:
+            type: string  
+            example : test
+          required: false  
+        - in: query
+          name: order
+          schema:
+            type: string
+            example : asc
+          required: true  
+        - in: query
+          name: sort
+          schema:
+            type: string 
+            example : id
+          required: false  
+      responses:
+        '200':
+          description: Ok...!
+        '210':
+          description: getOne - empty...!
+        '400':
+          description: validation error  
+        '403':
+          description: Access Denied...!     
   # modulo subscribers
 
   # modulo paymenttype 
@@ -421,6 +469,7 @@ paths:
           description: validation error
         '403':
           description: Access Denied...!
+
   /ws/paymentdetails/list:
     get:
       tags:
@@ -433,7 +482,7 @@ paths:
           name: idSubscribers
           schema:
             type: integer 
-            example : 0   
+            example : 0
       responses:
         '200':
           description: Ok...!
@@ -442,12 +491,10 @@ paths:
         '400':
           description: validation error  
         '403':
-          description: Access Denied...!          
-          
-          # Modulo paymentdetails
-
+          description: Access Denied...!
+   
   /ws/paymentdetails/confirm: 
-    put:
+     put:
       tags:
         - paymentdetails
       summary: confirm paymentdetails.
@@ -468,8 +515,57 @@ paths:
           description: validation error / Sql Errors
         '403':
           description: Access Denied...!   
-
-          # modulo paymentdetails  
+          
+  /ws/paymentdetails/paginator:
+    get:
+      tags:
+        - paymentdetails
+      summary: Get One paymentdetails.
+      description:  One paymentdetails.
+      operationId: paymentdetailsPaginator   
+      parameters:          
+        - in: query
+          name: start
+          schema:
+            type: integer 
+            example : 0
+          required: true   
+        - in: query
+          name: lenght
+          schema:
+            type: integer 
+            example : 0
+          required: true  
+        - in: query
+          name: search
+          schema:
+            type: string  
+            example : 
+          required: false  
+        - in: query
+          name: order
+          schema:
+            type: string
+            example : asc
+          required: true  
+        - in: query 
+          name: sort
+          schema:
+            type: string 
+            example : id
+          required: false 
+      responses:
+        '200':
+          description: Ok...!
+        '210':
+          description: getOne - empty...!
+        '400':
+          description: validation error  
+        '403':
+          description: Access Denied...!     
+          
+          # Modulo paymentdetails
+ 
 
   /ws/loghistory:
     get:
@@ -567,7 +663,55 @@ paths:
         '400':
           description: validation error  
         '403':
-          description: Access Denied...!          
+          description: Access Denied...! 
+  
+  /ws/loghistory/paginator:
+    get:
+      tags:
+        - loghistory
+      summary: Get One loghistory.
+      description:  One loghistory.
+      operationId: loghistoryPaginator   
+      parameters:          
+        - in: query
+          name: start
+          schema:
+            type: integer 
+            example : 0
+          required: true   
+        - in: query
+          name: lenght
+          schema:
+            type: integer 
+            example : 0
+          required: true  
+        - in: query
+          name: search
+          schema:
+            type: string  
+            example : test
+          required: false  
+        - in: query
+          name: order
+          schema:
+            type: string
+            example : asc
+          required: true  
+        - in: query 
+          name: sort
+          schema:
+            type: string
+            example : id
+          required: false 
+      responses:
+        '200':
+          description: Ok...!
+        '210':
+          description: getOne - empty...!
+        '400':
+          description: validation error  
+        '403':
+          description: Access Denied...!     
           
           # Modulo loghistory
 

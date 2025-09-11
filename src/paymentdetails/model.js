@@ -9,7 +9,7 @@ async function paginator(data,headers) {
         let user = Token.getDateToken(token);
         let idUser = user.sub.id;
         if (search == undefined || search == '') search = '';
-
+        if (sort == undefined || sort == '') sort = 'id';
         let sql = `SELECT count(pd.id) as recordsTotal
                 FROM payment_details pd
                 INNER JOIN subscribers sb ON pd.id_subscribers = sb.id
@@ -20,15 +20,21 @@ async function paginator(data,headers) {
         sql = `SELECT count(pd.id) as recordsFiltered 
                 FROM payment_details pd
                 INNER JOIN subscribers sb ON pd.id_subscribers = sb.id
-                INNER JOIN user u ON sb.id_user = u.id;`
-                console.log(sql)
+                INNER JOIN user u ON sb.id_user = u.id
+                WHERE (pd.amount LIKE CONCAT('%', '${search}', '%')
+                OR sb.period LIKE CONCAT('%', '${search}', '%')
+                OR u.email LIKE CONCAT('%', '${search}', '%'));`
         outsql = await SQL(sql);
         let recordsFiltered = outsql[0].recordsFiltered;
 
         sql = `SELECT pd.*, sb.period, u.email
                 FROM payment_details pd
                 INNER JOIN subscribers sb ON pd.id_subscribers = sb.id
-                INNER JOIN user u ON sb.id_user = u.id;`; 
+                INNER JOIN user u ON sb.id_user = u.id
+                WHERE (pd.amount LIKE CONCAT('%', '${search}', '%')
+                OR sb.period LIKE CONCAT('%', '${search}', '%')
+                OR u.email LIKE CONCAT('%', '${search}', '%'))
+                ORDER BY ${sort} ${order} LIMIT ${start}, ${lenght};`; 
         outsql = await SQL(sql);        
         let list = outsql
 
