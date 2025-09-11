@@ -9,7 +9,7 @@ async function paginator(data,headers) {
         let user = Token.getDateToken(token);
         let idUser = user.sub.id;
         if (search == undefined || search == '') search = '';
-
+        if (sort == undefined || sort == '') sort = 'id';
         let sql = `SELECT count(id) as recordsTotal FROM log_history WHERE id_user = ${idUser}`
         let outsql = await SQL(sql);
         let recordsTotal = outsql[0].recordsTotal;
@@ -27,7 +27,7 @@ async function paginator(data,headers) {
                 WHERE id_user = ${idUser} AND 
                 (message like CONCAT('%', '${search}' , '%')
                 OR response like CONCAT('%', '${search}' , '%'))
-                ORDER BY id ${order} LIMIT ${start}, ${lenght}`; 
+                ORDER BY ${sort} ${order} LIMIT ${start}, ${lenght}`; 
         outsql = await SQL(sql);        
         let list = outsql
 
